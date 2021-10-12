@@ -65,7 +65,7 @@ void load_path(char *txt_id,std::vector<path_data> &path)
 		ss >> p.x >> p.y >> p.yaw >> p.curvature >> p.left_width >> p.right_width;
 		path.push_back(p);
 	}
-	txt.close();	
+	txt.close();
 }
 
 void write_path(char *txt_id,std::vector<path_data> path)

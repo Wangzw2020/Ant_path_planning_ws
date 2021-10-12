@@ -15,7 +15,7 @@ catkin_package(
 
 
 include_directories(
-# include
+ include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -25,4 +25,7 @@ target_link_libraries(path_data_change ${catkin_LIBRARIES})
 
 add_executable(path_splice src/path_splice.cpp)
 target_link_libraries(path_splice ${catkin_LIBRARIES})
+
+add_executable(path_planning src/path_planning.cpp)
+target_link_libraries(path_planning ${catkin_LIBRARIES})
 
