@@ -1,0 +1,28 @@
+cmake_minimum_required(VERSION 3.0.2)
+project(path_operate)
+
+
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
+  std_msgs
+)
+
+catkin_package(
+
+
+)
+
+
+include_directories(
+# include
+  ${catkin_INCLUDE_DIRS}
+)
+
+
+add_executable(path_data_change src/path_data_change.cpp)
+target_link_libraries(path_data_change ${catkin_LIBRARIES})
+
+add_executable(path_splice src/path_splice.cpp)
+target_link_libraries(path_splice ${catkin_LIBRARIES})
+
