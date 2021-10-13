@@ -1,7 +1,9 @@
-
 #include<iostream>
 #include<fstream>
 #include<vector>
+#include<string>
+#include <tinyxml2.h>
+#include "ros/ros.h"
 using namespace std;
 
 struct path_data{
@@ -15,15 +17,22 @@ struct path_data{
 
 class Path{
 private:
+	//txt数据
 	int path_id_;
 	int num_;
 	std::vector<path_data> path_;
-	char *txt_id_;
+	string txt_id_;
 	bool passable_;
+	
+	//xml数据
+	
+	
 	
 public:
 	Path();
-	Path(int id, char *txt_id);
+	Path(int id, string& txt_id);
+	~Path();
+	//txt数据
 	std::vector<path_data> getPath();
 	int getId();
 	path_data getPath_data(int a);
@@ -33,26 +42,29 @@ public:
 	void openPath();
 	void clearPath();
 	void writePath();
-	~Path();
+	
+	//xml数据
+	
 };
 
 Path::Path()
 {
 	cout<<"new path created!"<<endl;
+	num_ = 0;
 }
 
-Path::Path(int id, char *txt_id)
+Path::Path(int id, string& txt_id)
 {
 	path_id_ = id;
 	txt_id_ = txt_id;
-	fstream txt;
+	ifstream txt;
 	passable_ = true;
 	string line;
 	path_data p;
 	num_ = 0;
-	txt.open(txt_id);
+	txt.open(txt_id.c_str());
 	if(!txt)
-		cout<<"open"<<txt_id<<"failed!"<<endl;
+		cout<<"open"<<id<<" failed!"<<endl;
 	while(txt.good())
 	{
 		getline(txt,line);
@@ -65,7 +77,6 @@ Path::Path(int id, char *txt_id)
 		num_++;
 	}
 	txt.close();
-	cout<<"path"<<id<<" loaded!"<<endl;	
 }
 
 std::vector<path_data> Path::getPath()
@@ -90,6 +101,7 @@ int Path::getNum()
 
 void Path::addPath(std::vector<path_data> path_new)
 {
+	num_ += path_new.size();
 	path_.insert(path_.end(),path_new.begin(),path_new.end());
 }
 
@@ -107,11 +119,12 @@ void Path::clearPath()
 {
 	cout<<"path"<<path_id_<<" cleared!"<<endl;	
 	path_.clear();
+	num_ = 0;
 }
 
 void Path::writePath()
 {	
-	ofstream txt(txt_id_);
+	ofstream txt(txt_id_.c_str());
 	if(!txt)
 		cout<<"write open failed!"<<endl;
 	for (int i = 0;i<path_.size();i++)
