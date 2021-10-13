@@ -3,6 +3,7 @@
 string all_path_id = "/home/wzw/workspace/txt_operate_ws/src/path_operate/src/all_path.txt";
 
 string txt_new_id = "/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path_final.txt";
+string xml_new_id = "/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path_final.xml";
 
 std::vector<Path> load_path();
 
@@ -20,9 +21,9 @@ int main()
 	id[1]=5;
 	id[2]=9;
 	id[3]=13;
-	
+	/*
 	//最终存储位置
-	Path path_final(0,txt_new_id);
+	Path path_final(0,txt_new_id,xml_new_id);
 	path_final.clearPath();
 	Path bezier;
 	for (int j = 0; j<sizeof(id); j++)
@@ -43,7 +44,7 @@ int main()
 					
 	//cout<<path_final.getNum()<<endl;
 	path_final.writePath();
-
+	*/
 	return 0;
 }
 
@@ -51,26 +52,30 @@ std::vector<Path> load_path()
 {
 	std::vector<Path> all_path;
 	std::vector<string> txt_id;
-	
+	std::vector<string> xml_id;
 	ifstream all_path_txt(all_path_id.c_str());
 	if (!all_path_txt)
 		cout<<"all path file open failed"<<endl;
-	string line,txt_id_k;
+	string line, txt_id_k, xml_id_k;
 	while (all_path_txt.good())
 	{
 		getline(all_path_txt,line);
 		if (line.length()==0)
 			break;
 		std::stringstream ss(line);
-		ss>>txt_id_k;
+		ss>>txt_id_k>>xml_id_k;
 		txt_id.push_back(txt_id_k);
+		xml_id.push_back(xml_id_k);
+		cout<<"txt_id="<<txt_id_k<<endl;
+		cout<<"xml_id="<<xml_id_k<<endl;
 	}
-
+	
 	for (int i=0; i<txt_id.size(); i++)
 	{
-		Path path(i+1,txt_id[i]);
+		Path path(i+1,txt_id[i],xml_id[i]);
 		all_path.push_back(path);
 	}
+	
 	cout<<"all path loaded!"<<endl;
 
 	return all_path;
@@ -79,7 +84,7 @@ std::vector<Path> load_path()
 Path compute_points(Path a,Path b)
 {
 	//读取前一条路的最后两个点以及后一条路的前两个点 并计算两直线交点
-	path_data p = a.getPath_data(a.getNum()-1);
+	Path_data p = a.getPath_data(a.getNum()-1);
 	double x1 = p.x;
 	double y1 = p.y;
 	//cout<< x1 <<'\t'<< y1 <<endl;
@@ -100,8 +105,8 @@ Path compute_points(Path a,Path b)
 	//cout<< x <<'\t'<< y <<endl;
 	
 	Path curve;
-	std::vector<path_data> b_curve;
-	path_data b_point;
+	std::vector<Path_data> b_curve;
+	Path_data b_point;
 	if ((x4*y2-x4*y1-x3*y2+x3*y1-x2*y4+x2*y3+x1*y4-x1*y3)==0)
 	{
 		for (double i=0; i<=9; i++)

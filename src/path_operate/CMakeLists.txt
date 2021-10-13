@@ -29,3 +29,4 @@ target_link_libraries(path_splice ${catkin_LIBRARIES})
 add_executable(path_planning src/path_planning.cpp)
 target_link_libraries(path_planning ${catkin_LIBRARIES})
 
+target_link_libraries(path_planning ${catkin_LIBRARIES} /usr/local/lib/libtinyxml2.a)

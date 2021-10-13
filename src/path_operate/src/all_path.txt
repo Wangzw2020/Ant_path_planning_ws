@@ -1,17 +1,1 @@
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path1.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path2.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path3.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path4.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path5.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path6.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path7.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path8.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path9.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path10.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path11.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path12.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path13.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path14.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path15.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path16.txt
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/txt_test/path17.txt
+/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path/20210908_01.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path/20210908_01_info.xml
