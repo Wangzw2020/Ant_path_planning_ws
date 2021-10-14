@@ -7,7 +7,7 @@
             <duration>parking time(s), -1 for destination</duration>
             <add>To add a parking point manually, please follow the format below</add>
         </Description>
-        <ParkingPoint id="0" index="215" duration="-1"/>
+        <ParkingPoint id="0" index="529" duration="-1"/>
     </ParkingPoints>
     <TurnRanges>
         <Description>
@@ -17,6 +17,7 @@
             <add>To add a turn range manually, please follow the format below</add>
         </Description>
         <TurnRange type="0" start="0" end="15"/>
+        <TurnRange type="-1" start="10" end="128"/>
     </TurnRanges>
     <SpeedRanges>
         <Description>
@@ -25,6 +26,7 @@
             <end>the end index of the given max speed</end>
             <add>To add a max speed range manually, please follow the format below</add>
         </Description>
+        <SpeedRange speed="10" start="229" end="366"/>
     </SpeedRanges>
     <TrafficLightPoints>
         <Description>
@@ -32,5 +34,6 @@
             <id>the sequence of the traffic light point</id>
             <add>To add a max speed range manually, please follow the format below</add>
         </Description>
+        <TrafficLightPoint id="0" index="428"/>
     </TrafficLightPoints>
 </PathInfo>
