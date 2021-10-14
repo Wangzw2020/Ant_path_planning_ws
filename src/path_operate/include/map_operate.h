@@ -23,7 +23,7 @@ public:
 	void load_final_path(string& final_path_position);
 	std::vector<Path> getAllPath() { return all_path_; }
 	void setFinalPathId(int *id);
-	//int getFinalPathId() { return final_path_id_[0]; }
+	int* getFinalPathId() { return final_path_id_; }
 	void splice_final_path();
 	
 	void recordPath();

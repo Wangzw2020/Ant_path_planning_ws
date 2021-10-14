@@ -18,6 +18,8 @@ int main()
 	
 	map.setFinalPathId(id);
 	
+	//int *a = map.getFinalPathId();
+
 	map.load_final_path(final_path_position);
 	
 	map.splice_final_path();
