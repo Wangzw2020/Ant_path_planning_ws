@@ -45,6 +45,7 @@ private:
 	std::vector<Path_data> path_;
 	string txt_id_;
 	bool passable_;
+	double path_length_;
 	
 	//xml数据
 	string xml_id_;
@@ -64,6 +65,7 @@ public:
 	int getId() { return path_id_; }
 	Path_data getPath_data(int a) { return path_[a]; }
 	int getNum() { return num_; }
+	double getLength() { return path_length_; }
 	void setTxtId(string& txt_id);
 	void setXmlId(string& xml_id);
 	void addPath(std::vector<Path_data> path_new);
@@ -83,7 +85,7 @@ public:
 
 Path::Path()
 {
-	cout<<"New Path Created!"<<endl;
+	//cout<<"New Path Created!"<<endl;
 	num_ = 0;
 }
 
@@ -111,6 +113,16 @@ Path::Path(int id, string& txt_id, string& xml_id)
 		path_.push_back(p);
 		num_++;
 	}
+	for (int i=1; i<num_/100; ++i)
+	{
+		path_length_ += sqrt((path_[100*i].x - path_[100*i-100].x) 
+						* (path_[100*i].x - path_[100*i-100].x)
+						+ (path_[100*i].y - path_[100*i-100].y) 
+						* (path_[100*i].y - path_[100*i-100].y));
+	}
+	path_length_ = sqrt((path_[0].x - path_[num_-1].x) * (path_[0].x - path_[num_-1].x)
+					+ (path_[0].y - path_[num_-1].y) * (path_[0].y - path_[num_-1].y));
+	//cout<<"path_length_=" << path_length_<<endl;
 	txt.close();
 	
 	//读取xml路径数据
@@ -235,7 +247,7 @@ void Path::addPath(std::vector<Path_data> path_new)
 void Path::addPathInfo(Path path_new)
 {
 	int index, start, end;
-	cout<<"pathInfo adding"<<endl;
+	//cout<<"path "<< path_new.getId() << " Info adding"<<endl;
 	std::vector<ParkingPoint> parking_points = path_new.getParkingPoints();
 	std::vector<TrafficLightPoint> traffic_light_points = path_new.getTraffidLightPoints();
 	std::vector<TurnLightRange> turn_light_ranges = path_new.getTurnLightRanges();

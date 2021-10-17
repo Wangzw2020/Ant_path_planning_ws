@@ -2,28 +2,66 @@
 
 struct path_data;
 class Path;
+class Node;
+Path compute_points(Path a,Path b,int b_num); // 计算路径a->b中间的路径点
+bool hasNode(Node node, std::vector<Node> nodes);
 
-#define NUM_OF_POINTS 100
-Path compute_points(Path a,Path b); // 计算路径a->b中间的路径点
+struct Edge{
+	string node_go;
+	int path_id;
+	double distance;
+};
 
 struct way_point{
 	int id;
 	
 };
 
+class Node{
+private:
+	string node_name_;
+	std::vector<Edge> distances_;
+	
+public:
+	Node();
+	string getNodeName() { return node_name_; }
+	void setNodeName(string node_name);
+	void setDistance(string node_name, int id, double dis);
+	//void setParentNode(string name);
+	std::vector<Edge> getEdge() { return distances_;}
+};
+
 class Map{
 private:
-	std::vector<Path> all_path_;
-	int final_path_id_[100];	//记录规划后的路径id 初始值-1
-	std::vector<Path> final_path_;
+	std::vector<Path> all_path_;		//所有路的信息
+	std::vector<int> final_path_id_;	//最终得到路的id
+	std::vector<Path> final_path_;		//最终路径
+	std::vector<Node> all_nodes_;		//所有节点信息
+	
+	int b_num_;
+	int start_point_, end_point_;
+	Node start_node_, end_node_;
 	
 public:
 	Map();
-	void load_all_path(string& all_path_position);
+	void load_all_path(string& all_path_position);	//读txt,xml
 	void load_final_path(string& final_path_position);
 	std::vector<Path> getAllPath() { return all_path_; }
 	void setFinalPathId(int *id);
-	int* getFinalPathId() { return final_path_id_; }
+	std::vector<int> getFinalPathId() { return final_path_id_; }
+	
+	//节点信息处理
+	void load_graph(string& graph_position);
+	void addPath(string node_name1, string node_name2, int id);
+	void printAllNodes();
+	void printAllPath();
+	
+	//路径计算
+	void setStartPoint(int id);
+	void setEndPoint(int id);
+	
+	void compute_path();
+	void setB_num(int b);
 	void splice_final_path();
 	
 	void recordPath();
@@ -31,11 +69,28 @@ public:
 	
 };
 
+Node::Node()
+{
+	
+}
+
+void Node::setNodeName(string node_name)
+{
+	node_name_ = node_name;
+}
+
+void Node::setDistance(string node_name, int id, double dis)
+{
+	Edge edge;
+	edge.node_go = node_name;
+	edge.path_id = id;
+	edge.distance = dis;
+	distances_.push_back(edge);
+}
+
 Map::Map()
 {
 	cout<<"New Map Created!"<<endl;
-	for (int i=0; i<100; i++)
-		final_path_id_[i] = -1;
 }
 
 void Map::load_all_path(string& all_path_position)
@@ -64,7 +119,44 @@ void Map::load_all_path(string& all_path_position)
 		Path path(i+1,txt_id[i],xml_id[i]);
 		all_path_.push_back(path);
 	}
-	cout<<"all path loaded!"<<endl;	
+	cout<<"all path files loaded!"<<endl;	
+}
+
+void Map::load_graph(string& graph_position)
+{
+	Node node;
+	ifstream graph_txt(graph_position.c_str());
+	if (!graph_txt)
+		cout<<"graph file open failed"<<endl;
+	string line, node_name1, node_name2;
+	std::vector<string> node_name;
+	int id;
+	int n=0;
+	
+	while (graph_txt.good())
+	{
+		getline(graph_txt,line);
+		if (line.length()==0)
+			break;
+		if (n==0)
+		{	
+			std::stringstream ss(line);
+			string tmp;
+			while (ss>>tmp)
+			{
+				node.setNodeName(tmp);
+				all_nodes_.push_back(node);
+			}
+			n++;
+			continue;
+		}
+		std::stringstream ss(line);
+		ss>>node_name1>>node_name2>>id;
+		addPath(node_name1,node_name2,id);
+		//cout<<"txt_id="<<txt_id_k<<endl;
+		//cout<<"xml_id="<<xml_id_k<<endl;
+	}
+	
 }
 
 void Map::load_final_path(string& final_path_position)
@@ -110,7 +202,7 @@ void Map::splice_final_path()
 			{
 				if (final_path_[0].getNum()!=0)
 				{
-					bezier = compute_points(final_path_[0],all_path_[all_path_[i].getId()-1]);
+					bezier = compute_points(final_path_[0],all_path_[all_path_[i].getId()-1],b_num_);
 					final_path_[0].addPath(bezier.getPath());		
 				}				
 				final_path_[0].addPath(all_path_[i].getPath());
@@ -120,7 +212,7 @@ void Map::splice_final_path()
 	}
 }
 
-Path compute_points(Path a,Path b)
+Path compute_points(Path a,Path b,int b_num)
 {
 	//读取前一条路的最后两个点以及后一条路的前两个点 并计算两直线交点
 	Path_data p = a.getPath_data(a.getNum()-1);
@@ -157,9 +249,9 @@ Path compute_points(Path a,Path b)
 	Path_data b_point;
 	if ((x4*y2-x4*y1-x3*y2+x3*y1-x2*y4+x2*y3+x1*y4-x1*y3)==0)
 	{
-		for (double i=0; i<=(NUM_OF_POINTS-1); i++)
+		for (double i=0; i<=(b_num-1); i++)
 		{
-			double t = i/NUM_OF_POINTS;
+			double t = i/b_num;
 			b_point.x = (1-t)*x1 + t*x3;
 			b_point.y = (1-t)*y1 + t*y3;
 			b_point.yaw = 0;
@@ -172,9 +264,9 @@ Path compute_points(Path a,Path b)
 	}
 	else
 	{
-		for (double i=0; i<=(NUM_OF_POINTS-1); i++)
+		for (double i=0; i<=(b_num-1); i++)
 		{
-			double t = i/NUM_OF_POINTS;
+			double t = i/b_num;
 			b_point.x = (1-t)*(1-t)*x1 + 2*t*(1-t)*x + t*t*x3;
 			b_point.y = (1-t)*(1-t)*y1 + 2*t*(1-t)*y + t*t*y3;
 			b_point.yaw = 0;
@@ -206,6 +298,8 @@ void Map::recordPath()
 {
 	for (int i=0; i<final_path_.size(); i++)
 	{
+		if(final_path_[i].getNum()==0)
+			continue;
 		final_path_[i].writePath();
 		final_path_[i].writeXml();
 	}
@@ -215,6 +309,124 @@ void Map::recordPath()
 void Map::setFinalPathId(int *id)
 {
 	for (int i=0; i<sizeof(id); i++)
-		final_path_id_[i] = id[i];
+		final_path_id_.push_back(id[i]);
 }
 
+void Map::setStartPoint(int id)
+{
+	start_point_ = id;
+	std::vector<Edge> edges;
+	for(int i=0; i<all_nodes_.size(); ++i)
+	{
+		edges = all_nodes_[i].getEdge();
+		for(int j=0; j<edges.size(); ++j)
+		{
+			if (edges[j].path_id == start_point_)
+				start_node_.setNodeName(edges[j].node_go);
+		}
+	}
+	cout<< "start node: " << start_node_.getNodeName() <<endl;
+}
+
+void Map::setEndPoint(int id)
+{
+	end_point_ = id;
+	std::vector<Edge> edges;
+	for(int i=0; i<all_nodes_.size(); ++i)
+	{
+		edges = all_nodes_[i].getEdge();
+		for(int j=0; j<edges.size(); ++j)
+		{
+			if (edges[j].path_id == end_point_)
+				end_node_.setNodeName(all_nodes_[i].getNodeName());
+		}
+	}
+	cout<< "end node: " << end_node_.getNodeName() <<endl;
+}
+/*
+void Map::compute_path()
+{
+	std::vector<Node> nodes;
+	nodes.push_back(start_node_);
+	Node current_node, node;
+	std::vector<Edge> current_edges;
+	int flag = 0;
+	while(nodes.size()!=0)
+	{
+		
+		double min_dis = DBL_MAX;
+		
+		current_node = nodes[flag];
+		for(int i=0; i<nodes.size(); ++i)
+		{
+			if ()
+			{
+				current_node = nodes[i];
+			}
+		}
+		
+		
+		current_edges = current_node.getEdge();
+		
+		if (current_node.getNodeName() == end_node_.getNodeName())
+		{
+			cout<<"path planned!"<<endl;
+			break;
+		}
+		
+		for(int i=0; i<current_edges.size(); ++i)
+		{
+			if (current_edges[i].distance < min_dis)
+			{
+				node = current_edges[i];
+				min_dis = current_edges[i].distance;
+				if(hasNode(node,nodes) == false)
+					nodes.push_back(node);
+					flag++;
+			}
+		}
+	}	
+}
+*/
+void Map::setB_num(int b)
+{
+	b_num_ = b;
+}
+
+void Map::addPath(string node_name1, string node_name2, int id)
+{
+	for(int i=0; i<all_nodes_.size(); ++i)
+		if (all_nodes_[i].getNodeName() == node_name1)
+		{
+			all_nodes_[i].setDistance(node_name2, all_path_[i].getId(), all_path_[i].getLength());
+		}
+}
+
+void Map::printAllNodes()
+{
+	for(int i=0; i<all_nodes_.size(); i++)
+		cout<<"node name=" << all_nodes_[i].getNodeName() <<'\t';
+	cout<<endl;
+}
+
+void Map::printAllPath()
+{	
+	std::vector<Edge> edges;
+	for(int i=0; i<all_nodes_.size(); i++)
+	{
+		edges = all_nodes_[i].getEdge();
+		for(int j=0; j<edges.size(); j++)
+			cout<< "from "<< all_nodes_[i].getNodeName() <<" to "
+				<< edges[j].node_go << " is: " 
+				<< edges[j].distance <<endl;
+	}
+}
+
+bool hasNode(Node node, std::vector<Node> nodes)
+{
+	for (int i=0; i<nodes.size(); ++i)
+		if (node.getNodeName() == nodes[i].getNodeName())
+			return true;
+			
+	return false;
+}
