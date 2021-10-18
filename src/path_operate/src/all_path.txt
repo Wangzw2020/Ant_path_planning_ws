@@ -1,3 +1,10 @@
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path/path1.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path/path1_info.xml
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path/path2.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path/path2_info.xml
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path/path3.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path/path3_info.xml
+/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path1.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path1.xml
+/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path2.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path2.xml
+/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path3.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path3.xml
+/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path4.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path4.xml
+/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path5.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path5.xml
+/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path6.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path6.xml
+/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path7.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path7.xml
+/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path8.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path8.xml
+/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path9.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path9.xml
+/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path10.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_try/path10.xml

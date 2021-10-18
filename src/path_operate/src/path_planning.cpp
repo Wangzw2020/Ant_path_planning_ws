@@ -12,35 +12,34 @@ int main()
 	//将路径文件读入
 	
 	Map map;
-	map.load_all_path(all_path_position);
+	map.load_all_path(all_path_position);	//读txt、xml
 	
-	map.load_graph(graph_position);
+	map.load_graph(graph_position);			//读路网信息
+	
 	map.printAllNodes();
 	map.printAllPath();
 	
-	//
-	map.setStartPoint(1);
-	map.setEndPoint(3);
-	//记录规划后的路径id
-	int id[100] = {0};
+	map.setStartPoint(9);		//设定起点终点
+	map.setEndPoint(10);
 	
-	id[0]=1;
-	id[1]=2;
-	id[2]=3;
+//	map.setPassable(3,0);
+//	map.setPassable(4,0);
+//	map.setPassable(5,0);
+//	map.setPassable(6,0);
 	
-	map.setFinalPathId(id);
+	//路径计算 输出
 	
-	map.setB_num(NUM_OF_POINTS);
+	if(map.compute_path())		
+	{
+		map.setB_num(NUM_OF_POINTS);
+		map.load_final_path(final_path_position);
+		map.splice_final_path();
+		map.recordPath();
+	}
+	else
+		cout<<"No such path!!!"<<endl;
 	
-	//int *a = map.getFinalPathId();
 
-	map.load_final_path(final_path_position);
-	
-	map.splice_final_path();
-	
-	map.recordPath();
 	
 	return 0;
 }
-
-

@@ -7,7 +7,6 @@
             <duration>parking time(s), -1 for destination</duration>
             <add>To add a parking point manually, please follow the format below</add>
         </Description>
-        <ParkingPoint id="0" index="449" duration="-1"/>
     </ParkingPoints>
     <TurnRanges>
         <Description>
@@ -16,7 +15,6 @@
             <end>the end index of turn</end>
             <add>To add a turn range manually, please follow the format below</add>
         </Description>
-        <TurnRange type="0" start="0" end="15"/>
     </TurnRanges>
     <SpeedRanges>
         <Description>

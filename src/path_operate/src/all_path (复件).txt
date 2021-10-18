@@ -1,0 +1,3 @@
+/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path/path1.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path/path1_info.xml
+/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path/path2.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path/path2_info.xml
+/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path/path3.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path/path3_info.xml

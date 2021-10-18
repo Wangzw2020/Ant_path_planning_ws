@@ -72,6 +72,7 @@ public:
 	void addPathInfo(Path path_new);
 	void closePath();
 	void openPath();
+	bool isPassable() { return passable_; }
 	void clearPath();
 	void writePath();
 	
@@ -113,16 +114,16 @@ Path::Path(int id, string& txt_id, string& xml_id)
 		path_.push_back(p);
 		num_++;
 	}
-	for (int i=1; i<num_/100; ++i)
-	{
-		path_length_ += sqrt((path_[100*i].x - path_[100*i-100].x) 
-						* (path_[100*i].x - path_[100*i-100].x)
-						+ (path_[100*i].y - path_[100*i-100].y) 
-						* (path_[100*i].y - path_[100*i-100].y));
-	}
+//	for (int i=1; i<num_/100; ++i)
+//	{
+//		path_length_ += sqrt((path_[100*i].x - path_[100*i-100].x) 
+//						* (path_[100*i].x - path_[100*i-100].x)
+//						+ (path_[100*i].y - path_[100*i-100].y) 
+//						* (path_[100*i].y - path_[100*i-100].y));
+//	}
 	path_length_ = sqrt((path_[0].x - path_[num_-1].x) * (path_[0].x - path_[num_-1].x)
 					+ (path_[0].y - path_[num_-1].y) * (path_[0].y - path_[num_-1].y));
-	//cout<<"path_length_=" << path_length_<<endl;
+	//cout<<"path "<<id<<" length_=" << path_length_<<endl;
 	txt.close();
 	
 	//读取xml路径数据
