@@ -249,7 +249,8 @@ void Map::splice_final_path()
 				if (final_path_[0].getNum()!=0)
 				{
 					bezier = compute_points(final_path_[0],all_path_[all_path_[i].getId()-1],b_num_);
-					final_path_[0].addPath(bezier.getPath());		
+					final_path_[0].addPath(bezier.getPath());
+					final_path_[0].addTurnLightRange(bezier.getTurnLightRanges());
 				}				
 				final_path_[0].addPath(all_path_[i].getPath());
 				final_path_[0].addPathInfo(all_path_[i]);
@@ -292,8 +293,9 @@ Path compute_points(Path a,Path b,int b_num)
 	
 	Path curve;
 	std::vector<Path_data> b_curve;
+	TurnLightRange range;
 	Path_data b_point;
-	if (yaw1 - yaw3 <= 0.1 && yaw1 - yaw3 >=-0.1)
+	if (yaw1 - yaw3 <= 0.5 && yaw1 - yaw3 >=-0.5)
 	{
 		for (double i=0; i<=(b_num-1); i++)
 		{
@@ -323,6 +325,23 @@ Path compute_points(Path a,Path b,int b_num)
 			b_curve.push_back(b_point);
 		}
 	}
+	//计算转向灯 
+	if (yaw1 - yaw3 > 0.5)
+	{
+	    range.start_index = 0;
+	    range.end_index =0;
+	    range.type = 1;
+
+	}
+	else if (yaw1 - yaw3 < -0.5)
+	{
+	    range.start_index = 0;
+	    range.end_index =0;
+	    range.type = -1;
+	}
+	std::vector<TurnLightRange> ranges;
+	ranges.push_back(range);
+	curve.addTurnLightRange(ranges);
 	//计算航向角
 	
 	b_curve[0].yaw = atan((b_curve[0].y-b_curve[1].y)/(b_curve[0].x-b_curve[1].x))-3.14;
@@ -336,7 +355,6 @@ Path compute_points(Path a,Path b,int b_num)
 	}
 	
 	curve.addPath(b_curve);
-	
 	return curve;
 }
 

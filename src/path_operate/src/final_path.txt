@@ -1,2 +1,1 @@
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_final1.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_final1.xml
-/home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_final2.txt /home/wzw/workspace/txt_operate_ws/src/path_operate/src/test_file/path_final2.xml
+/home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/test_file/splice1.txt /home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/test_file/splice1_info.xml

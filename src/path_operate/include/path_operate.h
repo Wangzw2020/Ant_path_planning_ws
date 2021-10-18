@@ -77,6 +77,7 @@ public:
 	void writePath();
 	
 	//xml数据
+	void addTurnLightRange(std::vector<TurnLightRange> a);
 	std::vector<ParkingPoint> getParkingPoints() { return parking_points_; }
 	std::vector<TrafficLightPoint> getTraffidLightPoints() { return traffic_light_points_; }
 	std::vector<TurnLightRange> getTurnLightRanges() { return turn_light_ranges_; }
@@ -111,6 +112,7 @@ Path::Path(int id, string& txt_id, string& xml_id)
 		
 		std::stringstream ss(line);
 		ss >> p.x >> p.y >> p.yaw >> p.curvature >> p.left_width >> p.right_width;
+		p.curvature = 0.0;
 		path_.push_back(p);
 		num_++;
 	}
@@ -493,6 +495,16 @@ void Path::writeXml()
 	cout<<"xml recorded!"<<endl;
 }
 
+void Path::addTurnLightRange(std::vector<TurnLightRange> a)
+{
+    for(int i=0; i<a.size(); ++i)
+    {
+        a[i].start_index = num_ -100;
+        a[i].end_index = num_;
+        turn_light_ranges_.push_back(a[i]);
+    }
+        
+}
 
 Path::~Path()
 {

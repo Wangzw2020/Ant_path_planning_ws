@@ -2,9 +2,9 @@
 
 #define NUM_OF_POINTS 100
 
-string all_path_position = "/home/wzw/workspace/txt_operate_ws/src/path_operate/src/all_path.txt";
-string final_path_position = "/home/wzw/workspace/txt_operate_ws/src/path_operate/src/final_path.txt";
-string graph_position = "/home/wzw/workspace/txt_operate_ws/src/path_operate/src/graph_position.txt";
+string all_path_position = "/home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/all_path.txt";
+string final_path_position = "/home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/final_path.txt";
+string graph_position = "/home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/graph_position.txt";
 
 
 int main()
@@ -19,8 +19,8 @@ int main()
 	map.printAllNodes();
 	map.printAllPath();
 	
-	map.setStartPoint(9);		//设定起点终点
-	map.setEndPoint(10);
+	map.setStartPoint(1);		//设定起点终点
+	map.setEndPoint(3);
 	
 //	map.setPassable(3,0);
 //	map.setPassable(4,0);
