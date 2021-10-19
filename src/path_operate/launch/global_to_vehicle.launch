@@ -1,0 +1,14 @@
+<!-- -->
+
+<launch>
+    <node name = "global_to_vehicle" pkg = "global_to_vehicle" type = "global_to_vehicle" output = "screen">
+        <param name = "sub_object_str" type="string" value = "/objects"/>
+        <param name = "sub_obstacle_str" type="string" value = "/obstacles"/>
+        <param name = "pub_object_str" type="string" value = "/objects_vehicle"/>
+        <param name = "pub_obstacle_str" type="string" value = "/obstacles_vehicle"/>
+        <param name = "sub_odom_str" type="string" value = "/gps_odom"/>
+        <param name = "frame_id" type="string" value = "base_link"/>  
+        <param name = "show_myself" type="bool" value = "true"/>    
+    </node>
+</launch>
+

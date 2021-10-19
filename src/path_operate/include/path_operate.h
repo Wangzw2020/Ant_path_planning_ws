@@ -67,9 +67,7 @@ public:
 	int getNum() { return num_; }
 	double getLength() { return path_length_; }
 	void setTxtId(string& txt_id);
-	void setXmlId(string& xml_id);
 	void addPath(std::vector<Path_data> path_new);
-	void addPathInfo(Path path_new);
 	void closePath();
 	void openPath();
 	bool isPassable() { return passable_; }
@@ -77,7 +75,9 @@ public:
 	void writePath();
 	
 	//xml数据
-	void addTurnLightRange(std::vector<TurnLightRange> a);
+	void setXmlId(string& xml_id);
+	void addPathInfo(Path path_new);
+	void addTurnLightRange(std::vector<TurnLightRange> turn_light_range);
 	std::vector<ParkingPoint> getParkingPoints() { return parking_points_; }
 	std::vector<TrafficLightPoint> getTraffidLightPoints() { return traffic_light_points_; }
 	std::vector<TurnLightRange> getTurnLightRanges() { return turn_light_ranges_; }
@@ -89,6 +89,12 @@ Path::Path()
 {
 	//cout<<"New Path Created!"<<endl;
 	num_ = 0;
+}
+
+
+Path::~Path()
+{
+
 }
 
 Path::Path(int id, string& txt_id, string& xml_id)
@@ -116,16 +122,14 @@ Path::Path(int id, string& txt_id, string& xml_id)
 		path_.push_back(p);
 		num_++;
 	}
-//	for (int i=1; i<num_/100; ++i)
-//	{
-//		path_length_ += sqrt((path_[100*i].x - path_[100*i-100].x) 
-//						* (path_[100*i].x - path_[100*i-100].x)
-//						+ (path_[100*i].y - path_[100*i-100].y) 
-//						* (path_[100*i].y - path_[100*i-100].y));
-//	}
-	path_length_ = sqrt((path_[0].x - path_[num_-1].x) * (path_[0].x - path_[num_-1].x)
-					+ (path_[0].y - path_[num_-1].y) * (path_[0].y - path_[num_-1].y));
-	//cout<<"path "<<id<<" length_=" << path_length_<<endl;
+	for (int i=1; i<num_/50; ++i)
+	{
+		path_length_ += sqrt((path_[50*i].x - path_[50*i-50].x) 
+						* (path_[50*i].x - path_[50*i-50].x)
+						+ (path_[50*i].y - path_[50*i-50].y) 
+						* (path_[50*i].y - path_[50*i-50].y));
+	}
+	
 	txt.close();
 	
 	//读取xml路径数据
@@ -236,15 +240,46 @@ void Path::setTxtId(string& txt_id)
 	txt_id_ = txt_id;
 }
 
-void Path::setXmlId(string& xml_id)
+void Path::openPath()
 {
-	xml_id_ = xml_id;
+	passable_=true;
+}
+
+void Path::closePath()
+{
+	passable_=false;
+}
+
+void Path::clearPath()
+{
+	cout<<"path"<<path_id_<<" cleared!"<<endl;	
+	path_.clear();
+	num_ = 0;
+}
+
+void Path::writePath()
+{	
+	ofstream txt(txt_id_.c_str());
+	if(!txt)
+		cout<<"write open failed!"<<endl;
+	for (int i = 0;i<path_.size();i++)
+		txt << std::fixed << std::setprecision(3) << path_[i].x << '\t' 
+			<< path_[i].y << '\t' << path_[i].yaw << '\t' << path_[i].curvature 
+			<< '\t' << path_[i].left_width << '\t' << path_[i].right_width
+			<< "\r\n";
+	txt.close();
+	cout<<"txt recorded!"<<endl;
 }
 
 void Path::addPath(std::vector<Path_data> path_new)
 {
 	num_ += path_new.size();
 	path_.insert(path_.end(),path_new.begin(),path_new.end());		
+}
+
+void Path::setXmlId(string& xml_id)
+{
+	xml_id_ = xml_id;
 }
 
 void Path::addPathInfo(Path path_new)
@@ -289,35 +324,15 @@ void Path::addPathInfo(Path path_new)
 	}
 }
 
-void Path::openPath()
+void Path::addTurnLightRange(std::vector<TurnLightRange> turn_light_range)
 {
-	passable_=true;
-}
-
-void Path::closePath()
-{
-	passable_=false;
-}
-
-void Path::clearPath()
-{
-	cout<<"path"<<path_id_<<" cleared!"<<endl;	
-	path_.clear();
-	num_ = 0;
-}
-
-void Path::writePath()
-{	
-	ofstream txt(txt_id_.c_str());
-	if(!txt)
-		cout<<"write open failed!"<<endl;
-	for (int i = 0;i<path_.size();i++)
-		txt << std::fixed << std::setprecision(3) << path_[i].x << '\t' 
-			<< path_[i].y << '\t' << path_[i].yaw << '\t' << path_[i].curvature 
-			<< '\t' << path_[i].left_width << '\t' << path_[i].right_width
-			<< "\r\n";
-	txt.close();
-	cout<<"txt recorded!"<<endl;
+    for(int i=0; i<turn_light_range.size(); ++i)
+    {
+        turn_light_range[i].start_index = num_ -100;
+        turn_light_range[i].end_index = num_;
+        turn_light_ranges_.push_back(turn_light_range[i]);
+    }
+        
 }
 
 void Path::writeXml()
@@ -495,18 +510,3 @@ void Path::writeXml()
 	cout<<"xml recorded!"<<endl;
 }
 
-void Path::addTurnLightRange(std::vector<TurnLightRange> a)
-{
-    for(int i=0; i<a.size(); ++i)
-    {
-        a[i].start_index = num_ -100;
-        a[i].end_index = num_;
-        turn_light_ranges_.push_back(a[i]);
-    }
-        
-}
-
-Path::~Path()
-{
-
-}

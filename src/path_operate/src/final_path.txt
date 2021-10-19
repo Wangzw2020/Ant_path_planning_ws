@@ -1,1 +1,0 @@
-/home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/test_file/splice1.txt /home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/test_file/splice1_info.xml

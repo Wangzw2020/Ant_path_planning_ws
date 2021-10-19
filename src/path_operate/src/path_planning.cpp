@@ -2,14 +2,33 @@
 
 #define NUM_OF_POINTS 100
 
-string all_path_position = "/home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/all_path.txt";
-string final_path_position = "/home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/final_path.txt";
-string graph_position = "/home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/graph_position.txt";
+string files_position = "/home/wzw/workspace/Ant_path_planning_ws/src/path_operate/src/files.txt";
 
+class GetPath;
 
 int main()
 {
-	//将路径文件读入
+	//将文件读入对应的地图文件
+	ifstream map_txt;
+	map_txt.open(files_position.c_str());
+	if(!map_txt)
+		cout<<"open map file failed!"<<endl;
+	string line, all_path_position, final_path_position, graph_position;
+	int n = 1;
+	while(map_txt.good())
+	{
+		getline(map_txt,line);
+		if (line.length()==0)
+			break;
+		std::stringstream ss(line);
+		if (n==1)
+			ss >> all_path_position;
+		else if (n==2)
+			ss >> final_path_position;
+		else if (n==3)
+			ss >> graph_position;
+		n++;
+	}
 	
 	Map map;
 	map.load_all_path(all_path_position);	//读txt、xml
@@ -43,3 +62,21 @@ int main()
 	
 	return 0;
 }
+
+class GetPath{
+private:
+	
+public:
+
+};
+
+
+
+
+
+
+
+
+
+
+

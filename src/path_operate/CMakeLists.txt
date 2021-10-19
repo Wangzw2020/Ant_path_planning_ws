@@ -23,9 +23,6 @@ include_directories(
 add_executable(path_data_change src/path_data_change.cpp)
 target_link_libraries(path_data_change ${catkin_LIBRARIES})
 
-add_executable(path_splice src/path_splice.cpp)
-target_link_libraries(path_splice ${catkin_LIBRARIES})
-
 add_executable(path_planning src/path_planning.cpp)
 target_link_libraries(path_planning ${catkin_LIBRARIES})
 

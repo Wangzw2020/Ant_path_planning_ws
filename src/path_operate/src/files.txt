@@ -1,0 +1,3 @@
+/home/wzw/workspace/Ant_path_planning_ws/src/path_operate/src/maps/map1/all_path.txt
+/home/wzw/workspace/Ant_path_planning_ws/src/path_operate/src/maps/map1/final_path.txt
+/home/wzw/workspace/Ant_path_planning_ws/src/path_operate/src/maps/map1/graph_position.txt

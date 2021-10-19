@@ -1,3 +1,0 @@
-/home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/test_file/path/path1.txt /home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/test_file/path/path1_info.xml
-/home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/test_file/path/path2.txt /home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/test_file/path/path2_info.xml
-/home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/test_file/path/path3.txt /home/seu/Wangzw/Ant_path_planning_ws/src/path_operate/src/test_file/path/path3_info.xml
